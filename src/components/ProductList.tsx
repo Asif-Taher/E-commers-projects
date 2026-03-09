@@ -1,6 +1,9 @@
+import { ProductsType } from '@/types';
 import React from 'react'
+import Categories from './Categories';
+import ProductCard from './ProductCard';
 
-const products = [
+const products:ProductsType = [
   {
     id: 1,
     name: "Adidas CoreFit T-Shirt",
@@ -115,7 +118,14 @@ const products = [
 const ProductList = () => {
   return (
     <div>
-        <h2>This is the product page</h2>
+        <Categories />
+        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
+          {
+            products.map(product => (
+              <ProductCard key={product.id} product={product}/>
+            ))
+          }
+        </div>
     </div>
   )
 }
