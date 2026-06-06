@@ -2,6 +2,7 @@ import { ProductsType } from '@/types';
 import React from 'react'
 import Categories from './Categories';
 import ProductCard from './ProductCard';
+import Link from 'next/link';
 
 const products:ProductsType = [
   {
@@ -115,7 +116,7 @@ const products:ProductsType = [
 ];
 
 
-const ProductList = () => {
+const ProductList = ({category} : {category: string}) => {
   return (
     <div>
         <Categories />
@@ -126,6 +127,7 @@ const ProductList = () => {
             ))
           }
         </div>
+        <Link href={category ? `/products/?category=${category}` : "/products"} className='flex justify-end underline text-sm mt-4 text-gray-500'>View All Product</Link>
     </div>
   )
 }
