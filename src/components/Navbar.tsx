@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import SerarchBar from './SerarchBar'
 import { Bell, Home, ShoppingCart } from 'lucide-react'
+import ShoppingCartIcon from './ShoppingCartIcon'
 
 const Navbar = () => {
   return (
@@ -17,7 +18,7 @@ const Navbar = () => {
            <Home className='h-4 w-4 text-gray-600'/>
             </Link>
            <Bell className='h-4 w-4 text-gray-600'/>
-           <ShoppingCart className='h-4 w-4 text-gray-600'/>
+          <ShoppingCartIcon />
            <Link href="/login">Sign in</Link>
         </div>
     </nav>
