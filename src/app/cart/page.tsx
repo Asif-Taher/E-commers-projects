@@ -1,6 +1,7 @@
 "use client"
 
 import { cartItemsType } from '@/types'
+import { ArrowRight } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { title } from 'process'
 import React from 'react'
@@ -97,6 +98,51 @@ const CartPage = () => {
             </div>
           ))
         }
+      </div>
+      {/* step and detail */}
+      <div className='w-full flex flex-col lg:flex-row gap-16'>
+        {/* step */}
+        <div className='w-full lg:w-7/12 shadow-lg border-2 border-gray-100 p-8 rounded-lg flex flex-col gap-8'>
+          1
+        </div>
+        {/* details */}
+        <div className='w-full lg:w-5/12 shadow-lg border-2 border-gray-100 p-8 rounded-lg flex flex-col gap-8'>
+        <h2 className='font-semibold'>Cart Details</h2>
+        <div className='flex flex-col gap-4'>
+          <div className='flex justify-between'>
+            <p>Subtotal</p>
+            <p>
+              ${
+                cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)
+              }
+            </p>
+          </div>
+          <div className='flex justify-between'>
+            <p>Discount (10%)</p>
+            <p>
+              $ 10
+            </p>
+          </div>
+          <div className='flex justify-between'>
+            <p>Shopping Fee</p>
+            <p>
+              $ 10
+            </p>
+          </div>
+          <hr />
+             <div className='flex justify-between'>
+            <p>Total</p>
+            <p>
+              ${
+                cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)
+              }
+            </p>
+          </div>
+        </div>
+        <button className='w-full bg-gray-800 hover:bg-gray-900 transition-all text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2'>Continue 
+          <ArrowRight className='w-3 h-3'/>
+        </button>
+        </div>
       </div>
     </div>
   )
