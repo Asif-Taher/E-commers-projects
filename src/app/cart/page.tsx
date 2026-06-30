@@ -2,8 +2,9 @@
 
 import PaymentForm from '@/components/PaymentForm'
 import ShippingForm from '@/components/ShippingForm'
-import { cartItemsType } from '@/types'
-import { ArrowRight } from 'lucide-react'
+import { cartItemsType, ShippingFormInputs } from '@/types'
+import { ArrowRight, Trash2 } from 'lucide-react'
+import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { title } from 'process'
 import React, { useState } from 'react'
@@ -85,7 +86,7 @@ const CartPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const activeStep = parseInt(searchParams.get("step") || "1")
-  const [shippingForm, setShippingForm] = useState(null);
+  const [shippingForm, setShippingForm] = useState<ShippingFormInputs>();
   return (
     <div className='flex flex-col gap-8 items-center justify-center mt-12'>
       <h2>Your shopping cart</h2>
@@ -106,13 +107,44 @@ const CartPage = () => {
         {/* step */}
         <div className='w-full lg:w-7/12 shadow-lg border-2 border-gray-100 p-8 rounded-lg flex flex-col gap-8'>
           {
-            activeStep === 1 ? ("product") : activeStep === 2 ? (<ShippingForm />) : activeStep === 3  && shippingForm ? (
+            activeStep === 1 ? (
+              cartItems.map((item) => (
+                // single cart item
+                <div className='flex items-center justify-between' key={item.id}>
+                  {/* image and cart */}
+                  <div className='flex gap-8'>
+                        <div className='relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden'>
+                          <Image 
+                          src={item.images[item.selectColor]}
+                          alt={item.name}
+                          fill
+                          className='object-contain'
+                          ></Image>
+                        </div>
+                        {/* item detail */}
+                        <div className='flex flex-col justify-between'>
+                          <div className='flex flex-col gap-1'>
+                            <p className='text-sm font-medium'>{item.name}</p>
+                            <p className='text-xs text-gray-500'>Quantity: {" "}{item.quantity}</p>
+                            <p className='text-xs text-gray-500'>Size: {" "}{item.selectSize}</p>
+                            <p className='text-xs text-gray-500'>color: {" "}{item.selectColor}</p>
+                          </div>
+                          <p className='font-medium'>${item.price.toFixed(2)}</p>
+                        </div>
+                  </div>
+                  {/* delete button */}
+                  <button className='w-8 h-8 rounded-full bg-red-100 text-red-400 flex items-center justify-center cursor-pointer'>
+                    <Trash2 className='w-3 h-3'/>
+                  </button>
+                </div>
+              ))
+            ) : activeStep === 2 ? (<ShippingForm setShippingForm={setShippingForm}/>) : activeStep === 3  && shippingForm ? (
               <p>Please fill in the shopping form continues</p>
             ) : (<PaymentForm />)
           }
         </div>
         {/* details */}
-        <div className='w-full lg:w-5/12 shadow-lg border-2 border-gray-100 p-8 rounded-lg flex flex-col gap-8'>
+        <div className='w-full lg:w-5/12 shadow-lg border-2 border-gray-100 p-8 rounded-lg flex flex-col gap-8 h-max'>
         <h2 className='font-semibold'>Cart Details</h2>
         <div className='flex flex-col gap-4'>
           <div className='flex justify-between'>
